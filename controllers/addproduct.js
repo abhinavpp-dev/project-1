@@ -29,7 +29,7 @@ const addproduct=async (req,res)=>{
       image:imageUrl, //save the cloudinary image url
     })
     await product.save()
-      res.render('/addproduct',{success:"added to cart",error:null});
+      res.render('users/addproduct',{success:"added to cart",error:null});
     
   }catch(err){
     console.error('error fetching products',err);

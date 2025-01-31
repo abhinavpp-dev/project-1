@@ -113,83 +113,83 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
 <script>
-$(document).ready(function () {
-    toastr.options = {
-        positionClass: 'toast-top-right',
-        progressBar: true,
-        timeOut: 3000,
-        extendedTimeOut: 5000,
-        showDuration: 500,
-        hideDuration: 500,
-        // Add default class names for all toasts
-        toastClass: 'toast-custom'
-    };
-
-    $('.add-to-cart').on('click', function () {
-        const productId = $(this).data('product-id');
-        const $button = $(this);
-
-        $button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Adding...');
-
-        $.ajax({
-            url: '/cart/add',
-            method: 'POST',
-            data: { productId: productId },
-            success: function (response) {
-                $button.prop('disabled', false).html('<i class="fas fa-cart-plus"></i> Add to Cart');
-
-                if (response.success) {
-                    toastr.success(
-                        response.message || 'Item added to cart!',
-                        null,  // Title
-                        { className: 'green-toastr' }  // Custom class
-                    );
-                    if (response.cartItemCount !== undefined) {
-                        $('#cart-item-count').text(response.cartItemCount);
+    $(document).ready(function () {
+        toastr.options = {
+            positionClass: 'toast-top-right',
+            progressBar: true,
+            timeOut: 3000,
+            extendedTimeOut: 5000,
+            showDuration: 500,
+            hideDuration: 500
+        };
+    
+        $('.add-to-cart').on('click', function () {
+            const productId = $(this).data('product-id');
+            const $button = $(this);
+    
+            $button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Adding...');
+    
+            $.ajax({
+                url: '/cart/add',
+                method: 'POST',
+                data: { productId: productId },
+                success: function (response) {
+                    $button.prop('disabled', false).html('<i class="fas fa-cart-plus"></i> Add to Cart');
+    
+                    if (response.success) {
+                        toastr.success(
+                            response.message || 'Item added to cart!',
+                            null,  
+                            { toastClass: 'toast green-toastr' }  
+                        );
+                        if (response.cartItemCount !== undefined) {
+                            $('#cart-item-count').text(response.cartItemCount);
+                        }
+                    } else {
+                        toastr.error(
+                            response.message || 'Error adding item to cart',
+                            null,
+                            { toastClass: 'toast green-toastr' }
+                        );
                     }
-                } else {
-                    toastr.error(
-                        response.message || 'Error adding item to cart',
-                        null,
-                        { className: 'green-toastr' }
-                    );
+                },
+                error: function (xhr) {
+                    $button.prop('disabled', false).html('<i class="fas fa-cart-plus"></i> Add to Cart');
+                    const errorMessage = xhr.responseJSON && xhr.responseJSON.message 
+                        ? xhr.responseJSON.message 
+                        : 'Connection error. Please try again.';
+                    toastr.error(errorMessage, null, { toastClass: 'toast green-toastr' });
                 }
-            },
-            error: function (xhr) {
-                $button.prop('disabled', false).html('<i class="fas fa-cart-plus"></i> Add to Cart');
-                const errorMessage = xhr.responseJSON && xhr.responseJSON.message 
-                    ? xhr.responseJSON.message 
-                    : 'Connection error. Please try again.';
-                toastr.error(errorMessage, null, { className: 'green-toastr' });
-            }
+            });
         });
     });
-});
-</script>
-
-<style>
-/* Add higher specificity for toastr classes */
-.toast.green-toastr {
-    background-color: #28a745 !important;
-    border-color: #218838 !important;
-}
-
-.toast.red-toastr {
-    background-color: #dc3545 !important;
-    border-color: #c82333 !important;
-}
-
-/* Optional: Style progress bar to match theme */
-.toast-green-toastr .toast-progress {
-    background-color: #218838 !important;
-}
-
-.toast-red-toastr .toast-progress {
-    background-color: #c82333 !important;
-}
-</style>
+    </script>
+    
+    <style>
+    /* Green success toast */
+    .toast.green-toastr {
+        background-color: #28a745 !important;
+        border-color: #218838 !important;
+        color: white !important;
+    }
+    
+    /* Red error toast */
+    .toast.red-toastr {
+        background-color: #dc3545 !important;
+        border-color: #c82333 !important;
+        color: white !important;
+    }
+    
+    /* Optional: Style progress bar to match toast theme */
+    .toast.green-toastr .toast-progress {
+        background-color: #218838 !important;
+    }
+    
+    .toast.red-toastr .toast-progress {
+        background-color: #c82333 !important;
+    }
+    </style>
     
 </body>
 </html>
