@@ -1,0 +1,115 @@
+/* Navbar Styling */
+.navbar {
+  background-color: #007bff; /* Blue background */
+  padding: 10px 20px; /* Adjusted padding for more room */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+/* Left side of the Navbar */
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.admin-icon {
+  font-size: 24px;
+  color: white;
+  margin-right: 10px;
+}
+
+.admin-text {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Right side of the Navbar */
+.navbar-right {
+  display: flex;
+  gap: 10px; /* Space between Home and Logout buttons */
+  align-items: center;
+}
+
+.navbar-item {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  white-space: nowrap; /* Prevents text wrapping */
+}
+
+.home-btn {
+  background-color: #28a745; /* Green background for home */
+}
+
+.logout-btn {
+  background-color: #dc3545; /* Red background for logout */
+}
+
+.navbar-item:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Body styling to center boxes */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f6f9;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  flex-direction: column;
+}
+
+/* Main container styling */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 30px; /* Adjusts spacing between boxes */
+  margin-top: 70px; /* Offset for the navbar height */
+  max-width: 1200px;
+  text-align: center;
+}
+
+/* Box styling */
+.box {
+  width: 180px; /* Adjusted size */
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.box:hover {
+  transform: translateY(-5px);
+}
+
+.box i {
+  font-size: 40px;
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+.box h4 {
+  font-size: 16px;
+  color: #333;
+  margin: 0;
+}

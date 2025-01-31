@@ -1,0 +1,79 @@
+/* Slider Management CSS */
+.container {
+  padding: 20px;
+}
+
+.slider-management h2 {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.slider-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.slider-table th, .slider-table td {
+  padding: 15px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.slider-table th {
+  background-color: #f4f4f4;
+}
+
+.slider-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.slider-table .slider-image {
+  width: 100px;  /* Specific width for the image box */
+  height: 80px;  /* Specific height for the image box */
+  object-fit: cover;  /* Cover the entire area without distortion */
+  display: block;  /* Ensure the image fits within the box */
+}
+
+.delete-btn {
+  background-color: #c9302c; /* Darker color for delete button */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.delete-btn:hover {
+  background-color: #ac2925; /* Darker hover color */
+}
+
+.delete-btn:active {
+  background-color: #8a1e1a; /* Darker active color */
+}
+
+.update-btn {
+  background-color: #2a9fd6; /* Darker color for update button */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.update-btn:hover {
+  background-color: #1e78b5; /* Darker hover color */
+}
+
+.update-btn:active {
+  background-color: #155d89; /* Darker active color */
+}
+
+.no-sliders-message {
+  text-align: center;
+  font-size: 16px;
+  color: #777;
+}

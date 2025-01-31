@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/adminpanelheader') %>
+  <link rel="stylesheet" href="/css/coupon.css"> <!-- Fixed the typo here -->
+  <link rel="stylesheet" href="/css/admindash.css">
+</head>
+<body>
+ 
+
+  <div class="container">
+    <%- include('../partials/adminnavbar') %>
+    <h1>Manage Coupons</h1>
+    <form action="/createcoupons" method="POST">
+      <h3>Create a New Coupon</h3>
+      <div class="form-group">
+        <label for="code">Coupon Code</label>
+        <input type="text" name="code" id="code" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="discount">Discount (%)</label>
+        <input type="number" name="discount" id="discount" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="expiryDate">Expiry Date</label>
+        <input type="date" name="expiryDate" id="expiryDate" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="usageLimit">Usage Limit</label>
+        <input type="number" name="usageLimit" id="usageLimit" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Create Coupon</button>
+    </form>
+
+    <h3 class="mt-5">Existing Coupons</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Discount</th>
+          <th>Expiry Date</th>
+          <th>Usage Limit</th>
+          <th>Used By</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% coupons.forEach(coupon => { %>
+          <tr>
+            <td><%= coupon.code %></td>
+            <td><%= coupon.discount %> %</td>
+            <td><%= new Date(coupon.expiryDate).toLocaleDateString() %></td>
+            <td><%= coupon.usageLimit %></td>
+            <td><%= coupon.usedBy.length %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="/css/adminlogin.css">
+</head>
+<body>
+    <%- include('../partials/msg') %>
+    <div class="login-container">
+        <h2>Admin Login</h2>
+     
+        <!-- Admin Login Form -->
+        <form action="/adminlogin" method="POST">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email" />
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password" />
+            </div>
+
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+
+        <div class="footer">
+            <p>Not an admin? <a href="/">Go to Homepage</a></p>
+        </div>
+    </div>
+</body>
+</html>

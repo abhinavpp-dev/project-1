@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+	<!-- header and css -->
+	<link rel="stylesheet" href="/css/cart.css">
+	<%- include('../partials/header') %>
+<body>
+	
+	<!--PreLoader-->
+    <div class="loader">
+        <div class="loader-inner">
+            <div class="circle"></div>
+        </div>
+    </div>
+    <!--PreLoader Ends-->
+
+	<!-- navbar -->
+	<%- include('../partials/navbar') %>
+	
+	<%- include('../partials/msg') %>
+
+	<!-- Homepage Slider -->
+	<div class="homepage-slider">
+		<% sliders.forEach(slider => { %>
+			<div class="single-homepage-slider" style="background-image: url('<%= slider.images[0].imageUrl %>');">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12 col-lg-7 offset-lg-1">
+							<div class="hero-text">
+								<div class="hero-text-tablecell">
+									<p class="subtitle"><%= slider.subtitle %></p>
+									<h1><%= slider.title %></h1>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<% }) %>
+	</div>
+
+	<!-- features list section -->
+	<div class="list-section pt-80 pb-80">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+					<div class="list-box d-flex align-items-center">
+						<div class="list-icon">
+							<i class="fas fa-shipping-fast"></i>
+						</div>
+						<div class="content">
+							<h3>Free Home Delivery</h3>
+							<p>When order over $75</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+					<div class="list-box d-flex align-items-center">
+						<div class="list-icon">
+							<i class="fas fa-phone-volume"></i>
+						</div>
+						<div class="content">
+							<h3>24/7 Support</h3>
+							<p>Get support all day</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="list-box d-flex justify-content-start align-items-center">
+						<div class="list-icon">
+							<i class="fas fa-sync"></i>
+						</div>
+						<div class="content">
+							<h3>Refund</h3>
+							<p>Get refund within 5 Min cancel!</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end features list section -->
+
+	<!-- advertisement section -->
+	<div class="abt-section mb-150">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 col-md-12">
+					<div class="abt-bg">
+						<a href=""></a>
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-12">
+					<div class="abt-text">
+						<p class="top-sub">Since Year 2023</p>
+						<h2>We are <span class="orange-text">Steak House</span></h2>
+						<p>At Steak House, we are passionate about crafting unforgettable dining experiences for every guest. Nestled in the heart of [Location/City], we pride ourselves on serving the finest cuts of steak, grilled to perfection and bursting with flavor.</p>
+						<p>Our mission is simple: to combine exceptional food, impeccable service, and a warm, inviting atmosphere. Whether you're celebrating a special occasion, enjoying a family dinner, or just craving a perfectly cooked steak, Steak House is the place to be.</p>
+						<a href="/about" class="boxed-btn mt-4">know more</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end advertisement section -->
+	
+	<!-- shop banner -->
+	<section class="shop-banner">
+		<div class="container">
+			<h3 id="dynamic-month"> is on! <br> with big <span class="orange-text">Discount...</span></h3>
+			<div class="sale-percent"><span><br> Upto</span>50% <span>off</span></div>
+			<a href="/menu" class="cart-btn btn-lg">Order Now</a>
+		</div>
+	</section>
+	<!-- end shop banner -->
+
+	<!-- footer  -->
+	<%- include('../partials/footer') %>
+
+	<!-- script -->
+	<%- include('../partials/script') %>
+
+	<script>
+		// Dynamically update the month in the banner
+		const monthNames = [
+			"January", "February", "March", "April", "May", 
+			"June", "July", "August", "September", "October", 
+			"November", "December"
+		];
+		const currentMonth = new Date().getMonth();
+		document.getElementById('dynamic-month').innerHTML = `${monthNames[currentMonth]} is on! <br> with big <span class="orange-text">Discount...</span>`;
+	</script>
+</body>
+</html>

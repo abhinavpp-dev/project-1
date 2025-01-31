@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delivered Orders</title>
+  <link rel="stylesheet" href="/css/deliverdorder.css">
+</head>
+<body>
+  <div class="container">
+    <h1>My Delivered Orders</h1>
+    <a href="/userorder" class="back-to-orders">Back to Active Orders</a>
+    <% if (orders && orders.length > 0) { %>
+      <% orders.forEach(order => { %>
+        <% if (order.status === 'Delivered') { %>
+          <div class="order-card">
+            <h3>Order #<%= order._id %></h3>
+            <p>Total Amount: ₹<%= order.totalAmount %></p>
+            <p>Status: <%= order.status %></p>
+            <h4>Items Ordered</h4>
+            <table>
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% order.items.forEach(item => { %>
+                  <tr>
+                    <% if (item.product) { %>
+                      <td><%= item.product.name %></td>
+                      <td><%= item.quantity %></td>
+                      <td>₹<%= item.product.price %></td>
+                      <td>₹<%= item.quantity * item.product.price %></td>
+                    <% } else { %>
+                      <td colspan="4">Product details unavailable</td>
+                    <% } %>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        <% } %>
+      <% }); %>
+    <% } else { %>
+      <p class="no-orders">You have no delivered orders.</p>
+    <% } %>
+  </div>
+</body>
+</html>

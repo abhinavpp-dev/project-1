@@ -1,0 +1,156 @@
+/* General reset */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+}
+
+/* Top Navigation Bar */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, #0056b3, #007BFF); /* Gradient */
+  color: white;
+  padding: 15px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Ensure top-nav stays above all other elements */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.top-nav .logo {
+  font-size: 22px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.top-nav .nav-items {
+  display: flex;
+  align-items: center;
+}
+
+.nav-items .notification-icon {
+  font-size: 20px;
+  margin-right: 20px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.nav-items .notification-icon:hover {
+  color: #ffcc00; /* Gold on hover */
+}
+
+.nav-items .logout-btn {
+  color: white;
+  text-decoration: none;
+  background-color: #ff4757; /* Red logout button */
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  font-weight: bold;
+}
+
+.nav-items .logout-btn:hover {
+  background-color: #e84141;
+  box-shadow: 0 4px 10px rgba(255, 71, 87, 0.3);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px; /* Set the sidebar width */
+  height: 100vh;
+  background: linear-gradient(180deg, #0056b3, #003f7f); /* Sidebar gradient */
+  color: white;
+  position: fixed;
+  top: 0; /* Align with top nav */
+  left: 0;
+  padding-top: 60px; /* Push below top nav */
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 999; /* Below the top-nav */
+  overflow-y: auto; /* Ensure scroll if sidebar becomes too long */
+}
+
+/* Admin Profile Section */
+.sidebar .admin-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.admin-profile .admin-icon {
+  font-size: 60px;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.admin-profile .admin-text {
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* Sidebar Links */
+.sidebar a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  text-decoration: none;
+  padding: 15px 20px;
+  font-size: 16px;
+  transition: background-color 0.3s, transform 0.2s;
+  border-radius: 5px;
+  margin: 5px 15px;
+}
+
+.sidebar a:hover {
+  background-color: #004494; /* Darker blue on hover */
+  transform: scale(1.05); /* Slight zoom on hover */
+}
+
+.sidebar a i {
+  font-size: 18px;
+}
+
+/* Main Content */
+body {
+  margin-left: 250px; /* Ensure space for sidebar */
+  margin-top: 60px; /* Allow space for top navbar */
+  overflow-x: hidden;
+}
+
+.main-content {
+  margin-left: 250px;
+  padding: 20px;
+  width: calc(100% - 250px); /* Main content takes remaining space */
+  background-color: #f8f9fa;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px; /* Smaller sidebar on smaller screens */
+  }
+
+  body {
+    margin-left: 200px; /* Adjust main content for smaller sidebar */
+  }
+
+  .top-nav {
+    padding: 10px 15px; /* Adjust top nav padding */
+  }
+
+  .main-content {
+    margin-left: 200px; /* Adjust main content */
+    padding: 15px;
+  }
+}

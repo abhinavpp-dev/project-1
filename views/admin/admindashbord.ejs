@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <!-- Link to the external CSS file -->
+  <link rel="stylesheet" href="/css/admindashboard.css">
+  <!-- FontAwesome icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <%- include('../partials/adminnavbar') %>
+  <%- include('../partials/msg') %>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-left">
+      <i class="fas fa-user-circle admin-icon"></i>
+      <span class="admin-text">Admin </span>
+    </div>
+    <div class="navbar-right">
+      
+      <a href="/adminlogout" class="navbar-item logout-btn">Logout</a>
+    </div>
+  </nav>
+
+  <!-- Main Dashboard Content -->
+  <div class="container">
+    <!-- Analytical Chart Box -->
+    <div class="box" onclick="window.location.href='/analytics'">
+      <i class="fas fa-chart-line"></i>
+      <h4>Analytical Chart</h4>
+    </div>
+    
+    <!-- View Users Box -->
+    <div class="box" onclick="window.location.href='/users'">
+      <i class="fas fa-users"></i>
+      <h4>View Users</h4>
+    </div>
+
+    <!-- View Menu Box -->
+    <div class="box" onclick="window.location.href='/viewmenu'">
+      <i class="fas fa-utensils"></i>
+      <h4>View Menu</h4>
+    </div>
+    
+    <!-- Add Product Box -->
+    <div class="box" onclick="window.location.href='/addproduct'">
+      <i class="fas fa-plus-circle"></i>
+      <h4>Add Menu</h4>
+    </div>
+
+    <!-- View Categories Box -->
+    <div class="box" onclick="window.location.href='/categories'">
+      <i class="fas fa-tags"></i>
+      <h4>View Categories</h4>
+    </div>
+
+    <!-- View Orders Box -->
+    <div class="box" onclick="window.location.href='/orders'">
+      <i class="fas fa-box"></i>
+      <h4>View Orders</h4>
+    </div>
+
+    <!-- Manage Discounts Box -->
+    <div class="box" onclick="window.location.href='/discounts'">
+      <i class="fas fa-percent"></i>
+      <h4>Manage Discounts</h4>
+    </div>
+    
+    <!-- Manage Banners Box -->
+    <div class="box" onclick="window.location.href='/banners'">
+      <i class="fas fa-image"></i>
+      <h4>Manage Sliders</h4>
+    </div>
+  </div>
+</body>
+</html>
+ 
+         

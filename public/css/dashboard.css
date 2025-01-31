@@ -1,0 +1,91 @@
+/* dashboard.css */
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f4f7fc;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+  width: 80%;
+  max-width: 1000px;
+  flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+  gap: 20px; /* Adds space between the boxes */
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 150px;
+  height: 150px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 20px;
+  text-align: center;
+}
+
+.box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.box i {
+  font-size: 40px;
+  color: #ff8000dd;
+}
+
+.box h4 {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+  .container {
+      width: 90%;  /* Make the container narrower on smaller screens */
+      justify-content: center;  /* Center items if they wrap */
+  }
+
+  .box {
+      width: 120px;  /* Smaller boxes on smaller screens */
+      height: 120px;
+      font-size: 14px;  /* Smaller text */
+  }
+
+  .box i {
+      font-size: 30px;  /* Smaller icons */
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+      width: 100%;  /* Full width container on mobile */
+      flex-direction: column;  /* Stack the boxes vertically */
+      align-items: center;
+  }
+
+  .box {
+      width: 100%;  /* Full width boxes on mobile */
+      height: 100px;
+      margin-bottom: 20px;  /* Adds space between boxes */
+  }
+
+  .box i {
+      font-size: 30px;  /* Smaller icons on mobile */
+  }
+
+  .box h4 {
+      font-size: 14px;  /* Smaller text on mobile */
+  }
+}

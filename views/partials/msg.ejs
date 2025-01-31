@@ -1,0 +1,26 @@
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Toastr CSS and JS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script>
+  toastr.options = {
+    "positionClass" : "toast-top-center",
+    "closeButton" : true,
+    "progressBar" : true,
+    "showMethod" : "slideDown",
+    "preventDuplicates" : true
+  }
+</script>
+
+<% if (error) { %>
+  <script>
+    toastr.error('<%= error %>'); 
+  </script>
+<% } %>
+<% if (success) { %>
+  <script>
+    toastr.success("<%= success %>"); 
+  </script>
+<% } %>

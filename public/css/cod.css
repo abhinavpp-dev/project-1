@@ -1,0 +1,137 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: #1f2937;
+  background: linear-gradient(to bottom, #f9fafb, #e5e7eb);
+  line-height: 1.7;
+}
+
+/* Container */
+.container {
+  max-width: 800px;
+  margin: 60px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #e5e7eb;
+}
+
+.container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Header */
+h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #374151;
+  text-align: center;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+  position: relative;
+}
+
+h1::after {
+  content: '';
+  display: block;
+  width: 100px;
+  height: 3px;
+  background: #3b82f6;
+  margin: 10px auto 0;
+  border-radius: 3px;
+}
+
+/* Section Titles */
+h2, h3 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #1d4ed8;
+  margin-bottom: 15px;
+  border-left: 5px solid #3b82f6;
+  padding-left: 10px;
+}
+
+/* Text */
+p {
+  margin-bottom: 15px;
+  font-size: 1rem;
+  color: #4b5563;
+  line-height: 1.8;
+}
+
+/* Summary & Info Sections */
+.order-summary, .delivery-info {
+  margin: 20px 0;
+  padding: 20px;
+  background: #f3f4f6;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.order-summary h2, .delivery-info h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+strong {
+  color: #2563eb;
+  font-weight: 600;
+}
+
+/* Button */
+a.btn {
+  display: inline-block;
+  text-decoration: none;
+  padding: 14px 28px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(145deg, #2563eb, #1e40af);
+  border: none;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+a.btn:hover {
+  background: linear-gradient(145deg, #1e40af, #2563eb);
+  box-shadow: 0 6px 15px rgba(37, 99, 235, 0.5);
+  transform: translateY(-3px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 2.4rem;
+  }
+
+  h2, h3 {
+    font-size: 1.3rem;
+  }
+
+  p {
+    font-size: 0.95rem;
+  }
+
+  a.btn {
+    font-size: 1rem;
+    padding: 12px 25px;
+  }
+}

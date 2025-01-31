@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800" rel="stylesheet">
+  <link rel="stylesheet" href="/css/profile.css">
+</head>
+<body>
+  <h1>User Profile</h1>
+  <form action="/update-profile" method="POST">
+    <label for="fullName">Name:</label>
+    <input type="text" id="fullName" name="fullName" placeholder="Name" value="<%= user.fullName %>" required />
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" placeholder="Email" value="<%= user.email %>" required />
+
+    <label for="mobile">Mobile:</label>
+    <input type="text" id="mobile" name="mobile" placeholder="Mobile" value="<%= user.mobile %>" required />
+
+    <!-- <label for="password">Password:</label>
+    <input type="password" id="password" name="password" placeholder="Password" value="<%= user.password %>" required /> -->
+
+    <button type="submit">Update</button>
+  </form>
+
+  <form action="/logout" method="POST">
+    <button class="logout-button" type="submit">Logout</button>
+  </form>
+</body>
+</html>

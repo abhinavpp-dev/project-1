@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sales Dashboard</title>
+
+  <%- include('../partials/adminpanelheader') %>
+  <link rel="stylesheet" href="/css/category.css"> <!-- Fixed the typo here -->
+  <link rel="stylesheet" href="/css/admindash.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+ 
+  <h1>Monthly Sales Report</h1>
+  <%- include('../partials/adminnavbar') %>
+  <canvas id="myChart"></canvas>
+
+  <script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+      type: 'bar', // Change to 'line' for line chart
+      data: {
+        labels: <%- JSON.stringify(labels) %>, // Access labels from the passed data
+        datasets: [{ 
+          label: 'Monthly Sales',
+          data: <%- JSON.stringify(data) %> // Access data from the passed data
+        }]
+      },
+      // ... (chart options) ...
+    });
+  </script>
+</body>
+</html>

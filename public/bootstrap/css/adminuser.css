@@ -1,0 +1,108 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f7fc;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+table thead {
+  background-color: #4CAF50;
+  color: white;
+  text-align: left;
+  font-size: 1.1em;
+}
+
+table th,
+table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tr:hover {
+  background-color: #f1f1f1;
+}
+
+table td {
+  font-size: 0.9em;
+}
+
+/* Status Column */
+.status-active {
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+.status-blocked {
+  color: #f44336;
+  font-weight: bold;
+}
+
+/* Action Buttons */
+form button {
+  padding: 8px 16px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 0.9em;
+  transition: background-color 0.3s;
+}
+
+form button:hover {
+  background-color: #0056b3;
+}
+
+/* Block Button */
+form button[type="submit"] {
+  background-color: #f44336;
+}
+
+form button[type="submit"]:hover {
+  background-color: #e53935;
+}
+
+/* Unblock Button */
+form button[type="submit"].unblock {
+  background-color: #4CAF50;
+}
+
+form button[type="submit"].unblock:hover {
+  background-color: #388e3c;
+}
+
+/* Centered Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}

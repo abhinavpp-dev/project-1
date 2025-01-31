@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/adminpanelheader') %>
+  <link rel="stylesheet" href="/css/admiinorderde.css">
+  <link rel="stylesheet" href="/css/admindash.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <%- include('../partials/adminnavbar') %>
+    <h1 class="mb-4">All Orders</h1>
+
+    <% if (orders.length > 0) { %>
+      <% orders.forEach(order => { %>
+        <div class="order mt-4 p-3 border rounded shadow-sm">
+          <h2 class="order-heading">Order Details</h2>
+          
+          <p><strong>Customer Name:</strong> <%= order.name %></p>
+          <p><strong>Email:</strong> <%= order.user.email %></p>
+          <p><strong>Phone:</strong> <%= order.phone %></p>
+          <p><strong>Address:</strong> <%= order.address %>, <%= order.city %></p>
+          <p><strong>Payment Method:</strong> <%= order.paymentMethod %></p>
+          <p><strong>Status:</strong> 
+            <span class="badge bg-<%= order.status === 'Delivered' ? 'success' : (order.status === 'Pending' ? 'warning' : 'danger') %>">
+              <%= order.status %>
+            </span>
+          </p>
+          <p><strong>Total Amount:</strong> ₹<%= order.totalAmount %></p>
+          <p><strong>Discount:</strong> ₹<%= order.discountAmount %></p>
+          <p><strong>Final Amount Paid:</strong> ₹<%= order.totalAmount - order.discountAmount %></p>
+          <p><strong>Order Date:</strong> <%= order.createdAt ? order.createdAt.toLocaleDateString() : 'N/A' %></p>
+
+          <h4 class="mt-3">Ordered Items</h4>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (order.items && order.items.length > 0) { %>
+                <% order.items.forEach(item => { %>
+                  <tr>
+                    <% if (item.product) { %>
+                      <td><%= item.product.name %></td>
+                      <td><%= item.quantity %></td>
+                      <td>₹<%= item.product.price %></td>
+                      <td>₹<%= item.quantity * item.product.price %></td>
+                    <% } else { %>
+                      <td colspan="4">Product details unavailable</td>
+                    <% } %>
+                  </tr>
+                <% }) %>
+              <% } else { %>
+                <tr>
+                  <td colspan="4">No items found.</td>
+                </tr>
+              <% } %>
+            </tbody>
+          </table>
+
+          <!-- Admin actions -->
+          <div class="mt-4 d-flex">
+            <form action="/update/<%= order._id %>" method="POST" class="d-inline">
+              <label for="status-<%= order._id %>" class="form-label">Order Status:</label>
+              <select
+                name="status"
+                id="status-<%= order._id %>"
+                class="form-select d-inline w-auto me-2"
+              >
+                <option value="Order Placed" <%= order.status === 'Order Placed' ? 'selected' : '' %>>
+                  Order Placed
+                </option>
+                <option value="Preparing" <%= order.status === 'Preparing' ? 'selected' : '' %>>
+                  Preparing
+                </option>
+                <option value="Ready for Pickup" <%= order.status === 'Ready for Pickup' ? 'selected' : '' %>>
+                  Ready for Pickup
+                </option>
+                <option value="Out for Delivery" <%= order.status === 'Out for Delivery' ? 'selected' : '' %>>
+                  Out for Delivery
+                </option>
+                <option value="Delivered" <%= order.status === 'Delivered' ? 'selected' : '' %>>
+                  Delivered
+                </option>
+                <option value="Cancelled" <%= order.status === 'Cancelled' ? 'selected' : '' %>>
+                  Cancelled
+                </option>
+              </select>
+              <button type="submit" class="btn btn-primary">
+                Update Status
+              </button>
+            </form>
+            
+            <form action="/delete/<%= order._id %>" method="POST" class="d-inline ms-2">
+              <button type="submit" class="btn btn-danger">Delete Order</button>
+            </form>
+          </div>
+        </div>
+      <% }); %>
+    <% } else { %>
+      <p>No orders found.</p>
+    <% } %>
+
+    <!-- Include Pagination -->
+    <%- include('../partials/pagination', { 
+      currentPage, 
+      totalPages, 
+      hasPreviousPage, 
+      hasNextPage, 
+      previousPage, 
+      nextPage 
+    }) %>
+  </div>
+</body>
+</html>

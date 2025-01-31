@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #f6f5f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: 'Montserrat', sans-serif;
+  height: 100vh;
+  margin: 0;
+}
+
+#otp-container {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  padding: 30px;
+  width: 400px;
+  max-width: 90%;
+  text-align: center;
+}
+
+#otp-container h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+#otp-container p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.otp-input-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.otp-input-container input {
+  background-color: #eee;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.otp-input-container input:hover {
+  border-color: #ff4b2b;
+  box-shadow: 0 0 5px rgba(255, 75, 43, 0.5);
+}
+
+.otp-input-container input:focus {
+  border-color: #ff416c;
+  outline: none;
+  box-shadow: 0 0 8px rgba(255, 65, 108, 0.5);
+}
+
+#otp-container button {
+  background-color: #ff4b2b;
+  border: none;
+  color: #fff;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+#otp-container button:hover {
+  background-color: #ff416c;
+  transform: scale(1.05);
+}
+
+#otp-container .resend {
+  font-size: 13px;
+  margin-top: 15px;
+}
+
+#otp-container .resend a {
+  color: #ff4b2b;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#otp-container .resend a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  #otp-container {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .otp-input-container input {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+}

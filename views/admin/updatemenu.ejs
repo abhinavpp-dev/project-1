@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/adminpanelheader') %>
+  <link rel="stylesheet" href="/css/addproduct.css">
+  <link rel="stylesheet" href="/css/admindash.css">
+
+  <body>
+
+
+    <!-- Main Content Section -->
+    <div class="main-content">
+      <!-- Include the top navigation bar -->
+      <%- include('../partials/adminnavbar') %>
+
+      <div class="container">
+        <h2>Update Menu </h2>
+
+        <!-- Product Add Form -->
+        <form action="/updateproduct" method="POST" enctype="multipart/form-data">
+          <input type="text" name="name" placeholder="Product Name" required>
+          <textarea name="description" placeholder="Product Description" required></textarea>
+          <input type="number" name="price" placeholder="Product Price" required>
+          
+          <select name="category" required>
+            <% categories.forEach(category => { %>
+              <option value="<%= category._id %>"><%= category.name %></option>
+            <% }); %>
+          </select>
+          
+          <input type="file" name="image" required>
+          
+          <button type="submit">Update Menu</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

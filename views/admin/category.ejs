@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/adminpanelheader') %>
+  <link rel="stylesheet" href="/css/category.css"> <!-- Fixed the typo here -->
+  <link rel="stylesheet" href="/css/admindash.css">
+</head>
+<body>
+  <!-- Main Content Section -->
+  <div class="main-content">
+    <!-- Include the top navigation bar -->
+    <%- include('../partials/adminnavbar') %>
+
+    <div class="container">
+      <h1>Categories</h1>
+      
+      <!-- Form to add a new category -->
+      <form action="/categories" method="POST">
+        <input type="text" name="name" placeholder="New Category Name" required>
+        <button type="submit">Add Category</button>
+      </form>
+
+      <!-- List of existing categories -->
+      <ul>
+        <% categories.forEach(category => { %>
+          <li>
+            <%= category.name %>
+            <form action="/categories/<%= category._id %>?_method=DELETE" method="POST" style="display:inline;">
+              <button type="submit">Delete</button>
+            </form>
+          </li>
+        <% }); %>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

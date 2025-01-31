@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/adminpanelheader') %>
+    <link rel="stylesheet" href="/css/banner.css">
+    <link rel="stylesheet" href="/css/admindash.css">
+  
+</head>
+<body>
+
+  <div class="container">
+    <%- include('../partials/adminnavbar') %>
+
+    <!-- Form for Adding Slider -->
+    <div class="form-container">
+      <h2>Add a New Slider</h2>
+      <form action="/addslider" method="POST" enctype="multipart/form-data">
+        <input type="text" name="title" placeholder="Slider Title" required>
+        <textarea name="subtitle" placeholder="Slider Subtitle" required></textarea>
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit">Add Slider</button>
+      </form>
+    </div>
+
+    <!-- Display List of Sliders -->
+   
+  </div>
+
+</body>
+</html>

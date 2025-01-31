@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/adminpanelheader') %>
+  <link rel="stylesheet" href="/css/userdetails.css">
+  <link rel="stylesheet" href="/css/admindash.css">
+</head>
+<body>
+  <!-- Main Content Section -->
+  <div class="main-content">
+    <!-- Include the top navigation bar -->
+    <%- include('../partials/adminnavbar') %>
+
+    <div class="container">
+      <h1>User Management</h1>
+
+      <!-- Search Bar -->
+      <div class="search-container">
+        <input type="text" id="search-bar" placeholder="Search users..." onkeyup="filterTable()">
+      </div>
+
+      <!-- Table -->
+      <table>
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="user-table-body">
+          <% users.forEach(user => { %>
+            <tr>
+              <td><%= user.fullName %></td>
+              <td><%= user.email %></td>
+              <td><%= user.mobile %></td>
+              <td class="<%= user.isBlocked ? 'status-blocked' : 'status-active' %>">
+                <%= user.isBlocked ? 'Blocked' : 'Active' %>
+              </td>
+              <td>
+                <% if (!user.isBlocked) { %>
+                  <form action="/users/blockuser/<%= user._id %>" method="POST" style="display:inline;">
+                    <button type="submit" class="blockbtn1">Block</button>
+                  </form>
+                <% } else { %>
+                  <form action="/users/unblockuser/<%= user._id %>" method="POST" style="display:inline;">
+                    <button type="submit" class="unblockbtn1">Unblock</button>
+                  </form>
+                <% } %>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function filterTable() {
+      const searchQuery = document.getElementById("search-bar").value.toLowerCase();
+      const rows = document.querySelectorAll("#user-table-body tr");
+
+      rows.forEach(row => {
+        const nameCell = row.querySelector("td:first-child").textContent.toLowerCase();
+        const emailCell = row.querySelector("td:nth-child(2)").textContent.toLowerCase();
+
+        if (nameCell.includes(searchQuery) || emailCell.includes(searchQuery)) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      });
+    }
+  </script>
+</body>
+</html>

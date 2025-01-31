@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Header -->
+<%- include('../partials/header') %>
+
+<body>
+    <!-- PreLoader -->
+    <div class="loader">
+        <div class="loader-inner">
+            <div class="circle"></div>
+        </div>
+    </div>
+    <!-- PreLoader Ends -->
+
+    <!-- Navbar -->
+    <%- include('../partials/navbar') %>
+    
+
+    <!-- Breadcrumb Section -->
+    <div class="breadcrumb-section breadcrumb-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2 text-center">
+                    <div class="breadcrumb-text">
+                        <p>HOT and SPICY</p>
+                        <h1>Menu</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Breadcrumb Section -->
+
+    <!-- Products Section -->
+    <div class="product-section mt-150 mb-150">
+        <div class="container">
+            <!-- Product Filters -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-filters">
+                        <ul>
+                            <li class="active" data-filter="*">All</li>
+                            <% categories.forEach(category => { %>
+                                <li data-filter=".<%= category.name.toLowerCase() %>">
+                                    <%= category.name %>
+                                </li>
+                            <% }); %>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product List -->
+            <div class="row product-lists">
+                <% products.forEach(product => { %>
+                    <div class="col-lg-4 col-md-6 text-center <%= product.category.name.toLowerCase() %>">
+                        <div class="single-product-item">
+                            <div class="product-image">
+                                <a href="/product/<%= product._id %>">
+                                    <img src="<%= product.image %>" alt="<%= product.name %>">
+                                </a>
+                            </div>
+                            <h3><%= product.name %></h3>
+                            <p class="product-price"><span>Full</span> ₹<%= product.price %></p>
+                            <button type="button" class="cart-btn add-to-cart" data-product-id="<%= product._id %>">
+                                <i class="fas fa-shopping-cart"></i> Add to cart
+                            </button>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+            <!-- End Product List -->
+        </div>
+
+        <!-- Pagination -->
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="pagination-wrap">
+                    <ul>
+                        <% if (currentpage > 1) { %>
+                            <li><a href="?page=<%= currentpage - 1 %>">Prev</a></li>
+                        <% } else { %>
+                            <li class="disabled"><span>Prev</span></li>
+                        <% } %>
+
+                        <% for (let i = 1; i <= totalpages; i++) { %>
+                            <li class="<%= currentpage === i ? 'active' : '' %>">
+                                <a href="?page=<%= i %>"><%= i %></a>
+                            </li>
+                        <% } %>
+
+                        <% if (currentpage < totalpages) { %>
+                            <li><a href="?page=<%= currentpage + 1 %>">Next</a></li>
+                        <% } else { %>
+                            <li class="disabled"><span>Next</span></li>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- End Pagination -->
+    </div>
+    <!-- End Products Section -->
+
+    <!-- Footer -->
+    <%- include('../partials/footer') %>
+
+    <!-- Script -->
+    <%- include('../partials/script') %>
+    <!-- Add Font Awesome for icons (if not already included) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+<script>
+$(document).ready(function () {
+    toastr.options = {
+        positionClass: 'toast-top-right',
+        progressBar: true,
+        timeOut: 3000,
+        extendedTimeOut: 5000,
+        showDuration: 500,
+        hideDuration: 500,
+        // Add default class names for all toasts
+        toastClass: 'toast-custom'
+    };
+
+    $('.add-to-cart').on('click', function () {
+        const productId = $(this).data('product-id');
+        const $button = $(this);
+
+        $button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Adding...');
+
+        $.ajax({
+            url: '/cart/add',
+            method: 'POST',
+            data: { productId: productId },
+            success: function (response) {
+                $button.prop('disabled', false).html('<i class="fas fa-cart-plus"></i> Add to Cart');
+
+                if (response.success) {
+                    toastr.success(
+                        response.message || 'Item added to cart!',
+                        null,  // Title
+                        { className: 'green-toastr' }  // Custom class
+                    );
+                    if (response.cartItemCount !== undefined) {
+                        $('#cart-item-count').text(response.cartItemCount);
+                    }
+                } else {
+                    toastr.error(
+                        response.message || 'Error adding item to cart',
+                        null,
+                        { className: 'green-toastr' }
+                    );
+                }
+            },
+            error: function (xhr) {
+                $button.prop('disabled', false).html('<i class="fas fa-cart-plus"></i> Add to Cart');
+                const errorMessage = xhr.responseJSON && xhr.responseJSON.message 
+                    ? xhr.responseJSON.message 
+                    : 'Connection error. Please try again.';
+                toastr.error(errorMessage, null, { className: 'green-toastr' });
+            }
+        });
+    });
+});
+</script>
+
+<style>
+/* Add higher specificity for toastr classes */
+.toast.green-toastr {
+    background-color: #28a745 !important;
+    border-color: #218838 !important;
+}
+
+.toast.red-toastr {
+    background-color: #dc3545 !important;
+    border-color: #c82333 !important;
+}
+
+/* Optional: Style progress bar to match theme */
+.toast-green-toastr .toast-progress {
+    background-color: #218838 !important;
+}
+
+.toast-red-toastr .toast-progress {
+    background-color: #c82333 !important;
+}
+</style>
+    
+</body>
+</html>

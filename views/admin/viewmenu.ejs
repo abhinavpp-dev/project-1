@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/adminpanelheader') %>
+  <link rel="stylesheet" href="/css/viewmenu.css">
+  <link rel="stylesheet" href="/css/admindash.css">
+
+  <body>
+    <!-- Include the sidebar -->
+
+
+    <!-- Main Content Section -->
+    <div class="main-content">
+      <!-- Include the top navigation bar -->
+      <%- include('../partials/adminnavbar') %>
+
+      <div class="container">
+        <h1>Menu Management</h1>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+          <input type="text" id="search-bar" placeholder="Search menu items..." onkeyup="filterTable()">
+        </div>
+
+        <!-- Table -->
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Category</th>
+              <th>Image</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="menu-table-body">
+            <!-- Assuming "menuItems" is passed to this EJS template -->
+            <% menuitems.forEach(menu => { %>
+              <tr>
+                <td><%= menu.name %></td>
+                <td><%= menu.description %></td>
+                <td><%= menu.price %></td>
+                <td><%= menu.category.name %></td> <!-- Display only category name -->
+                <td>
+                  <img src="<%= menu.image %>" alt="<%= menu.name %>" style="width: 100px; height: 100px;">
+                </td>
+                <td>
+                  <div class="actions">
+                    <a href="/updatemenu/<%= menu._id %>" class="btn btn-warning">Update</a>
+                    <form action="/deletemenu/<%= menu._id %>" method="POST" style="display: inline;">
+                      <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');">
+                        Delete
+                      </button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- JavaScript for Search -->
+    <script>
+      function filterTable() {
+        const searchQuery = document.getElementById("search-bar").value.toLowerCase();
+        const rows = document.querySelectorAll("#menu-table-body tr");
+
+        rows.forEach(row => {
+          const cells = row.querySelectorAll("td");
+          const nameCell = cells[0].textContent.toLowerCase();
+          const descriptionCell = cells[1].textContent.toLowerCase();
+          
+          if (nameCell.includes(searchQuery) || descriptionCell.includes(searchQuery)) {
+            row.style.display = "";
+          } else {
+            row.style.display = "none";
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
