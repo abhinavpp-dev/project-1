@@ -28,10 +28,7 @@
                                 <td><%= slider.title %></td>
                                 <td><%= slider.subtitle %></td>
                                 <td>
-                                    
-                                    <form action="/update-slider/<%= slider._id %>" method="GET" style="display:inline;">
-                                        <button type="submit" class="update-btn">Update</button>
-                                    </form>
+
                                     <form action="/delete-slider/<%= slider._id %>" method="POST" style="display:inline;">
                                         <button type="submit" class="delete-btn">Delete</button>
                                     </form>

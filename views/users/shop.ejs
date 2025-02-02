@@ -56,7 +56,7 @@
                     <div class="col-lg-4 col-md-6 text-center <%= product.category.name.toLowerCase() %>">
                         <div class="single-product-item">
                             <div class="product-image">
-                                <a href="/product/<%= product._id %>">
+                                
                                     <img src="<%= product.image %>" alt="<%= product.name %>">
                                 </a>
                             </div>
@@ -159,7 +159,7 @@
                     const errorMessage = xhr.responseJSON && xhr.responseJSON.message 
                         ? xhr.responseJSON.message 
                         : 'Connection error. Please try again.';
-                    toastr.error(errorMessage, null, { toastClass: 'toast green-toastr' });
+                    toastr.error(errorMessage, null, { toastClass: 'toast gree-toastr' });
                 }
             });
         });

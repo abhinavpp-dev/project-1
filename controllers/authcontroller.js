@@ -24,6 +24,8 @@ const transporter=nodemailer.createTransport({
 //renderhomepage
 const renderhomepage = async (req, res) => {
   try {
+    
+    
     // Fetch the slider data from the database
     const sliders = await Banner.find();
 
@@ -112,6 +114,8 @@ const signup=async(req,res)=>{
       console.log('user not found')
       return res.render('users/otp',{userId,success:'user not found',error:null});
      }
+  
+     
 
     //check if the otp has expired
 
@@ -142,7 +146,7 @@ const signup=async(req,res)=>{
     res.cookie('token',token,{httponly:true});
     console.log('signup sucessfull')
     return res.render('users/index_2',{success:`welcome ${user.fullName}`,error:null,sliders});
-
+  
     
   }
   catch(error){

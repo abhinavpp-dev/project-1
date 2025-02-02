@@ -6,28 +6,28 @@
 
   <body>
 
-
     <!-- Main Content Section -->
     <div class="main-content">
       <!-- Include the top navigation bar -->
       <%- include('../partials/adminnavbar') %>
 
       <div class="container">
-        <h2>Update Menu </h2>
+        <h2>Update Menu</h2>
 
-        <!-- Product Add Form -->
-        <form action="/updateproduct" method="POST" enctype="multipart/form-data">
-          <input type="text" name="name" placeholder="Product Name" required>
-          <textarea name="description" placeholder="Product Description" required></textarea>
-          <input type="number" name="price" placeholder="Product Price" required>
+        <!-- Product Update Form -->
+        <form action="/updateproduct/<%= product._id %>" method="POST" enctype="multipart/form-data">
+          <input type="text" name="name" placeholder="Product Name" value="<%= product.name %>" required>
+          <textarea name="description" placeholder="Product Description" required><%= product.description %></textarea>
+          <input type="number" name="price" placeholder="Product Price" value="<%= product.price %>" required>
           
           <select name="category" required>
             <% categories.forEach(category => { %>
-              <option value="<%= category._id %>"><%= category.name %></option>
+              <option value="<%= category._id %>" <%= product.category.equals(category._id) ? 'selected' : '' %>><%= category.name %></option>
             <% }); %>
           </select>
           
-          <input type="file" name="image" required>
+          <input type="file" name="image">
+          <p>Current Image: <img src="/uploads/<%= product.image %>" alt="Current Product Image" width="100"></p>
           
           <button type="submit">Update Menu</button>
         </form>

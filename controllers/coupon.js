@@ -77,7 +77,20 @@ const applycoupencode = async (req, res) => {
 };
 
 
+const deleteCoupon = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Coupon.findByIdAndDelete(id);
+    res.redirect('/discounts'); // Redirect back to the coupon management page
+  } catch (error) {
+    console.error('Error deleting coupon:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};
 
 
 
-module.exports = { renderCoupon, createCoupon, applycoupencode };
+
+
+
+module.exports = { renderCoupon, createCoupon, applycoupencode ,deleteCoupon};
