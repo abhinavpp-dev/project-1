@@ -17,7 +17,8 @@ const viewusers=async(req,res)=>{
 
 }catch(err){
   console.error('error in fetching users:',err);
-  res.status(500).send('server error');
+  // res.status(500).send('server error');
+  res.render('users/404');
 }
 };
 //render  admin login page
@@ -44,7 +45,8 @@ const adminlogin = async (req, res) => {
 
   } catch (error) {
 console.log(error);
-res.status(404).send('server error');
+// res.status(404).send('server error');
+res.render('users/404');
   }
 };
 
@@ -84,7 +86,8 @@ const unblockuser=async(req,res)=>{
     }
   }catch(err){
     console.error(err);
-    res.status(500).send('internal server error');
+    // res.status(500).send('internal server error');
+    res.render('users/404');
   }
 }
 
@@ -141,7 +144,8 @@ const rendersalesreport=async(req,res)=>{
   }); 
   }catch(error){
     console.log(error);
-    res.status(404).send('internal server error')
+    // res.status(404).send('internal server error')
+    res.render('users/404');
   }
 }
 

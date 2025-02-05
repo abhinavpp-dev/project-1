@@ -5,15 +5,6 @@ const { success, error } = require('toastr');
 
 //render add product form
 
-// const renderaddproductform=async(req,res)=>{
-//   try{
-//     const categories= await Category.find();
-//     res.render('admin/addproduct',{categories,success:null,error:null});
-//   }catch(err){
-//     console.error('error in rednering add product form:',err);
-//     res.render('users/404')
-//   }
-// }
 const renderaddproductform = async (req, res) => {
   try {
     // Fetch all categories from the database
@@ -103,21 +94,7 @@ const viewmenu=async(req,res)=>{
 
   }
 
-
-//  const  renderupdatemenu=async(req,res)=>{
-//     try{
-//       const menuitem=await Product.findById(req.params.id);
-//       const categories=await Category.find();
-//       if(!menuitem){
-//         return res.status(404).send('menu items not found');      
-//       }
-//       res.render('admin/updatemenu',{menuitem,categories,success:null,error:null});
-//     }catch(error){
-//       console.error(error)
-//       // res.status(404).send('internal server error');
-//       res.render('users/404')
-//     }
-//   };
+// updatemenu
 const renderupdatemenu = async (req, res) => {
   try {
     // Fetch the product based on its ID

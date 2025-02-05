@@ -82,13 +82,15 @@ const signup=async(req,res)=>{
   };
   transporter.sendMail(mailOption,(error)=>{
     if(error){
-      return res.status(500).json({message:'error in otp email'});
+      // return res.status(500).json({message:'error in otp email'});
+      res.render('users/404');
   }
   return res.render('users/otp',{userId:user._id,success:null,error:null});
   });
 }catch(err){
   console.error('signup error',err);
-  res.status(500).json({message:'internal server error'});
+  // res.status(500).json({message:'internal server error'});
+  res.render('users/404');
 }
   };
 
@@ -151,7 +153,8 @@ const signup=async(req,res)=>{
   }
   catch(error){
     console.error('error verifying OTP:',error);
-    res.status(500).send('invalid serever errorr');
+    // res.status(500).send('invalid serever errorr');
+    res.render('users/404');
   }
 };
 
@@ -168,7 +171,8 @@ const login=async(req,res)=>{
     }
 
     if(!user||!user.isVerified){
-      return res.render('users/loginpage',{success:null,error:'please verify your acc first'})
+      // return res.render('users/loginpage',{success:null,error:'please verify your acc first'})
+      res.render('users/404');
     }
 
     const ismatch=await bcrypt.compare(password,user.password);
@@ -216,7 +220,8 @@ const forgotpassword=async(req,res)=>{
     };
     transporter.sendMail(mailOptions,(error)=>{
       if(error){
-        return res.status(500).json({messsage:'error sending otp email'});
+        // return res.status(500).json({messsage:'error sending otp email'});
+        res.render('users/404');
       }
       return res.render('users/forgotpassword-otp',{userId:user._id,success:null,error:null});
     })
@@ -282,7 +287,8 @@ const forgotpassword=async(req,res)=>{
       
     }catch(error){
       console.log('otp verification error:',error);
-      res.status(500).send('internal server erroro') 
+      // res.status(500).send('internal server erroro') 
+      res.render('users/404');
     }
     
 
@@ -310,7 +316,8 @@ const forgotpassword=async(req,res)=>{
       const user=await User.findById(userId);
       if(!user){
         console.log('user not found');
-        return res.status(404).send('user not found');
+        // return res.status(404).send('user not found');
+        res.render('users/404');
       
       }
       user.password=hashedpassword;
@@ -320,7 +327,8 @@ const forgotpassword=async(req,res)=>{
       console.log('updated sucss fully');
     }catch(err){
       console.log(err)
-      res.status(500).send('internal server errror');
+      // res.status(500).send('internal server errror');
+      res.render('users/404');
           }
         };
         
@@ -344,7 +352,8 @@ const forgotpassword=async(req,res)=>{
             // fetch user details from database
             const user= await User.findById(userId);
             if(!user){
-              return res.status(404).send('user not found');
+              // return res.status(404).send('user not found');
+              res.render('users/404');
             }
             res.render('users/userdashbord',{user});
           }catch(err){
@@ -373,7 +382,8 @@ const forgotpassword=async(req,res)=>{
 
           const user=await User.findById(userId);
           if(!user){
-            res.status(400).send('user not found');
+            // res.status(400).send('user not found');
+            res.render('users/404');
           }
           
           res.render('users/profile',{user});
@@ -382,7 +392,8 @@ const forgotpassword=async(req,res)=>{
             return res. redirect('/login')
         }
           console.log('error in render profile:',err);
-          res.status(500).send('server error');
+          // res.status(500).send('server error');
+          res.render('users/404');
         }
       };
         
@@ -393,7 +404,8 @@ const forgotpassword=async(req,res)=>{
         try{
           const token=req.cookies.token;
           if(!token){
-            return res.status(400).send('unauthorized :user nopt logged in');
+            // return res.status(400).send('unauthorized :user nopt logged in');
+            res.render('users/404');
 
       }
       const decoded=jwt.verify(token,process.env.JWT_SECRET);

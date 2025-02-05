@@ -57,7 +57,8 @@ const addcart = async (req, res) => {
     const token = req.cookies.token;
 
     if (!token) {
-        return res.status(401).json({ message: 'Please log in first.' });
+        // return res.status(401).json({ message: 'Please log in first.' });
+        res.render('users/404');
     }
 
     try {
@@ -69,13 +70,15 @@ const addcart = async (req, res) => {
         const { productId } = req.body;
 
         if (!productId) {
-            return res.status(400).json({ message: 'Product ID is required.' });
+            // return res.status(400).json({ message: 'Product ID is required.' });
+            res.render('users/404');
         }
 
         // Check if the product exists
         const product = await Product.findById(productId);
         if (!product) {
-            return res.status(404).json({ message: 'Product not found.' });
+            // return res.status(404).json({ message: 'Product not found.' });
+            res.render('users/404');
         }
 
         // Check if the cart exists for the user
@@ -106,7 +109,8 @@ const addcart = async (req, res) => {
         }
 
         // Handle other errors
-        return res.status(500).json({ message: 'Internal server error.' });
+        // return res.status(500).json({ message: 'Internal server error.' });
+        res.render('users/404');
     }
 };
 
@@ -183,7 +187,8 @@ const increaseitem=async(req,res)=>{
 
     }catch(error){
         console.error(error);
-        res.status(404).send('internal server error');
+        // res.status(404).send('internal server error');
+        res.render('users/404');
     }
 }
 
@@ -211,7 +216,8 @@ try{
 
 }catch(error){
     console.error(error)
-    res.status(404).send('internal server error');
+    // res.status(404).send('internal server error');
+    res.render('users/404');
 }
 
 }
@@ -257,7 +263,8 @@ const removeitem = async (req, res) => {
         }
     } catch (err) {
         console.error(err);
-        return res.status(500).send('Internal server error.');
+        // return res.status(500).send('Internal server error.');
+        res.render('users/404');
     }
 };
 
