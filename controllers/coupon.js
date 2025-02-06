@@ -1,4 +1,4 @@
-const Coupon = require('../models/coupnmodel'); // Import the Coupon model
+const Coupon = require('../models/coupnmodel');
 
 // Function to render coupons
 const renderCoupon = async (req, res) => {
@@ -27,70 +27,69 @@ const createCoupon = async (req, res) => {
 
     // Save the coupon to the database
     await newCoupon.save();
-    res.redirect('/discounts')
+    res.redirect('/discounts');
   } catch (error) {
     res.status(500).json({ error: `Error creating coupon: ${error.message}` });
   }
 };
 
-
+// Function to apply coupon code at checkout
 const applycoupencode = async (req, res) => {
   try {
-    const { couponCode, totalAmount } = req.body;
+    const { couponCode, userId, totalAmount } = req.body;
 
-    // Validate input
-    if (!couponCode || !totalAmount) {
-      return res.status(400).json({ message: 'Coupon code and total amount are required.' });
-    }
+    let discountAmount = 0;
+    let message = '';
 
-    // Find the coupon in the database
-    const coupon = await Coupon.findOne({ code: couponCode });
-    if (!coupon) {
-      return res.status(400).json({ message: 'Invalid coupon code.' });
-    }
-
-    // Check if the coupon has expired
-    if (new Date(coupon.expiryDate) < new Date()) {
-      return res.status(400).json({ message: 'Coupon has expired.' });
-    }
-
-    // Check if the coupon has reached its usage limit
-    if (coupon.usageLimit <= coupon.usedBy.length) {
-      return res.status(400).json({ message: 'Coupon usage limit reached.' });
-    }
-
-    // Calculate the discount
-    const totalAmountNumber = parseFloat(totalAmount);
-    const discountAmount = (totalAmountNumber * coupon.discount) / 100;
-    const newTotal = totalAmountNumber - discountAmount;
-
-    // Respond with the new total and discount details
-    return res.status(200).json({ 
-      newTotal: newTotal.toFixed(2), 
-      discountAmount: discountAmount.toFixed(2),
-      message: 'Coupon applied successfully!'
+    // Check if coupon is valid
+    const coupon = await Coupon.findOne({
+      code: couponCode,
+      expiryDate: { $gte: new Date() },
+      usageLimit: { $gt: 0 }
     });
+
+    if (!coupon) {
+      message = 'Invalid or expired coupon code.';
+      return res.status(400).json({ message });
+    }
+
+    // Check if the user has already used the coupon
+    if (coupon.usedBy.includes(userId)) {
+      message = 'You have already used this coupon.';
+      return res.status(400).json({ message });
+    }
+
+    // Calculate discount amount
+    discountAmount = (coupon.discount / 100) * totalAmount;
+    const updatedTotalAmount = totalAmount - discountAmount;
+
+    // Update coupon usage
+    coupon.usedBy.push(userId);
+    coupon.usageLimit -= 1;
+    await coupon.save();
+
+    // Only show success message if coupon is successfully applied
+    message = 'Coupon applied successfully!';
+
+    return res.json({ newTotal: updatedTotalAmount.toFixed(2), message });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    console.error('Error applying coupon:', error);
+    res.status(500).json({ message: 'An error occurred while applying the coupon.', error: error.message });
   }
 };
 
 
+
+// Function to delete coupon
 const deleteCoupon = async (req, res) => {
   try {
     const { id } = req.params;
     await Coupon.findByIdAndDelete(id);
-    res.redirect('/discounts'); // Redirect back to the coupon management page
+    res.redirect('/discounts');
   } catch (error) {
     console.error('Error deleting coupon:', error);
     res.status(500).send('Internal Server Error');
   }
 };
 
-
-
-
-
-
-module.exports = { renderCoupon, createCoupon, applycoupencode ,deleteCoupon};
+module.exports = { renderCoupon, createCoupon, applycoupencode, deleteCoupon };

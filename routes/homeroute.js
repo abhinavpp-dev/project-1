@@ -8,6 +8,7 @@ const cartController=require('../controllers/cartcontrol');
 const { renderCheckout, checkoutController } = require('../controllers/checkoutcontroller');
 const { paymentsucess, cancelpayment } = require('../controllers/payment');
 const { userorder, deliveredOrders } = require('../controllers/ordercontroller');
+const { applycoupencode } = require('../controllers/coupon');
 
 
 
@@ -51,6 +52,8 @@ router.post('/checkout',checkoutController)
 //stripe payment
 router.get('/complete',paymentsucess);
 router.get('/cancel',cancelpayment)
+
+router.post('/apply-coupon',applycoupencode)
 
 // order and details
 router.get('/userorder',userorder)

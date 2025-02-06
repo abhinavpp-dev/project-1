@@ -6,7 +6,7 @@ const { renderadminlogin, adminlogin, viewusers, adminlogout, blockuser, unblock
 const { renderaddproductform, addproduct, viewmenu, renderupdatemenu, updatemenu, deletemenuitem } = require('../controllers/addproduct');
 const { rendercategories, createcategory, deletecategory } = require('../controllers/category');
 const { renderslider, addslider, rendermanageslider, updateslider, deleteslider } = require('../controllers/bannercontrol');
-const { renderCoupon, createCoupon, applycoupencode, deleteCoupon } = require('../controllers/coupon');
+const { renderCoupon, createCoupon, deleteCoupon } = require('../controllers/coupon');
 const { renderorder, renderAllOrders, deleteorder, updateorder } = require('../controllers/ordercontroller');
 
 
@@ -67,7 +67,7 @@ router.post('/delete-slider/:id',deleteslider);
 //coupon
 router.get('/discounts',renderCoupon)
 router.post('/createcoupons',createCoupon)
-router.post('/apply-coupon',applycoupencode)
+
 router.post('/deletecoupon/:id', deleteCoupon);
 
 

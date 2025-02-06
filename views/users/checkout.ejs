@@ -24,7 +24,9 @@
             <h4>Billing Details</h4>
             <!-- Hidden field to store final total -->
             <input type="hidden" name="totalAmount" id="hiddenTotalAmount" value="<%= totalAmount.toFixed(2) %>">
-            
+            <!-- Hidden field to store the selected coupon code -->
+            <input type="hidden" name="couponCode" id="hiddenCouponCode">
+
             <div class="form-group">
               <label for="name">Full Name</label>
               <input type="text" name="name" id="name" class="form-control" required>
@@ -83,11 +85,7 @@
                   <td colspan="3">
                     <div class="form-group">
                       <label for="couponCode">Available Coupon Codes</label>
-                      <select 
-                        name="couponCode" 
-                        id="couponCode" 
-                        class="form-control custom-select" 
-                        required>
+                      <select name="couponCode" id="couponCode" class="form-control custom-select" required>
                         <option value="" disabled selected>Select a coupon</option>
                         <% coupons.forEach(coupon => { %>
                           <option value="<%= coupon.code %>">
@@ -106,6 +104,12 @@
                 </tr>
               </tfoot>
             </table>
+            <!-- Coupon Message Section -->
+            <div class="coupon-message">
+              <% if (couponMessage) { %>
+                <p><%= couponMessage %></p>
+              <% } %>
+            </div>
           </div>
         </div>
       </div>
@@ -113,58 +117,55 @@
   </div>
   <!-- end checkout section -->
 
-  <!-- JavaScript Section -->
+  <%- include('../partials/footer') %>
+
   <script>
     // Apply Coupon Logic
-    document.getElementById('applyCouponButton').addEventListener('click', async () => {
-      const couponCode = document.getElementById('couponCode').value;
-      const totalAmount = document.getElementById('subtotalAmount').textContent.replace('₹', '');
-      const userId = "<%= user._id %>"; // Assuming user ID is available in EJS
+    // Apply Coupon Logic
+document.getElementById('applyCouponButton').addEventListener('click', async () => {
+  const couponCode = document.getElementById('couponCode').value;
+  let totalAmount = parseFloat(document.getElementById('subtotalAmount').textContent.replace('₹', '').trim());
+  const userId = "<%= user._id %>"; // Assuming user ID is available in EJS
 
-      if (!couponCode) {
-        document.getElementById('couponMessage').textContent = 'Please select a coupon.';
-        return;
-      }
+  if (!couponCode) {
+    document.getElementById('couponMessage').textContent = 'Please select a coupon.';
+    return;
+  }
 
-      try {
-        const response = await fetch('/apply-coupon', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ couponCode, totalAmount, userId }),
-        });
-        const data = await response.json();
-
-        if (response.ok) {
-          // Update visible total
-          document.getElementById('totalAmount').textContent = `₹${data.newTotal}`;
-          
-          // Update hidden input for form submission
-          document.getElementById('hiddenTotalAmount').value = data.newTotal;
-          
-          // Display success message
-          document.getElementById('couponMessage').textContent = data.message;
-          document.getElementById('couponMessage').style.color = 'green';
-        } else {
-          document.getElementById('couponMessage').textContent = data.message;
-          document.getElementById('couponMessage').style.color = 'red';
-        }
-      } catch (err) {
-        document.getElementById('couponMessage').textContent = 'An error occurred while applying the coupon.';
-      }
+  try {
+    const response = await fetch('/apply-coupon', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ couponCode, totalAmount, userId }),
     });
 
-    // Form Validation (Optional)
-    document.getElementById('checkoutForm').addEventListener('submit', (e) => {
-      const total = parseFloat(document.getElementById('hiddenTotalAmount').value);
-      if (isNaN(total) || total <= 0) {
-        e.preventDefault();
-        document.getElementById('error-message').textContent = 'Invalid total amount. Please apply a valid coupon.';
-        document.getElementById('error-message').style.display = 'block';
-      }
-    });
+    const data = await response.json(); // Parse the JSON response
+
+    if (response.ok) {
+      // Update visible total amount
+      document.getElementById('totalAmount').textContent = `₹${data.newTotal}`;
+
+      // Update hidden total amount for form submission
+      document.getElementById('hiddenTotalAmount').value = data.newTotal;
+
+      // Store the selected coupon code in hidden input field
+      document.getElementById('hiddenCouponCode').value = couponCode;
+
+      // Display success message
+      document.getElementById('couponMessage').textContent = data.message;
+      document.getElementById('couponMessage').style.color = 'green';
+    } else {
+      // If the response is not ok (like coupon already used), display the error message
+      document.getElementById('couponMessage').textContent = data.message;
+      document.getElementById('couponMessage').style.color = 'red';
+    }
+  } catch (err) {
+    document.getElementById('couponMessage').textContent = 'An error occurred while applying the coupon.';
+    document.getElementById('couponMessage').style.color = 'red';
+  }
+});
+
   </script>
 
-  <%- include('../partials/footer') %>
-  <%- include('../partials/script') %>
 </body>
 </html>

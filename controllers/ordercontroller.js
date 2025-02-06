@@ -56,25 +56,25 @@ const  deleteorder=async(req,res)=>{
   }
 };
 
-// updateorder=async(req,res)=>{
-//   const {id}=req.params;
-//   const{status}=req.body;
-//   try{
-//     const updatedorder=await Order.findByIdAndUpdate(
-//       id,
-//       {status},
-//       {new:true}
-//     );
-//     if(!updatedorder){
-//       return res.status(404).json({message:'error in update'});
-//     }
-//     res.redirect('/orders')
-//   }catch(error){
-//     console.error(error);
-//     res.status(404).send('internal  server error');
-//   }
+updateorder=async(req,res)=>{
+  const {id}=req.params;
+  const{status}=req.body;
+  try{
+    const updatedorder=await Order.findByIdAndUpdate(
+      id,
+      {status},
+      {new:true}
+    );
+    if(!updatedorder){
+      return res.status(404).json({message:'error in update'});
+    }
+    res.redirect('/orders')
+  }catch(error){
+    console.error(error);
+    res.status(404).send('internal  server error');
+  }
 
-// }
+}
 updateorder = async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;

@@ -48,11 +48,17 @@ const contact = async (req, res) => {
   const { name, email, phone, subject, message } = req.body;
 
   try {
-  
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,  // Your email address
+        pass: process.env.EMAIL_PASS   // Your app-specific password
+      }
+    });
 
     const mailOption = {
-      from: email, // User's email from the contact form
-      to: process.env.EMAIL_USER, // Admin email fetched from the database
+      from: `"${name}" <${email}>`,  // User's name and email
+      to: process.env.EMAIL_USER,     // Admin email
       subject: `New Contact Form Submission - ${subject}`,
       text: `
         You have a new contact form submission:
@@ -64,19 +70,17 @@ const contact = async (req, res) => {
 
         Message:
         ${message}
-      `,
+      `
     };
 
-    // Send the email
     await transporter.sendMail(mailOption);
     console.log("Email sent successfully");
-    res.redirect('/contact?status=success'); // For success
-
-
-    // Respond to the client
-    // res.status(200).json({ message: "Your message has been sent successfully." });
+    res.redirect('/contact?status=success');
   } catch (error) {
-    console.error("Error sending email:", error);
+    console.error("Error sending email:", error.message);
+    if (error.response) {
+      console.error("Error response:", error.response);
+    }
     res.status(500).json({ message: "Failed to send your message. Please try again later." });
   }
 };
