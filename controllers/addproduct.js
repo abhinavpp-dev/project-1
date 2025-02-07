@@ -7,17 +7,19 @@ const { success, error } = require('toastr');
 
 const renderaddproductform = async (req, res) => {
   try {
-    // Fetch all categories from the database
+    
     const categories = await Category.find();
     
-    // Render the addproduct view with categories and no messages
     res.render('admin/addproduct', { categories, success: null, error: null });
+ 
   } catch (err) {
     console.error('Error rendering add product form:', err);
-    res.render('users/404'); // Render a 404 page in case of an error
+
+    console.log(err)
   }
 };
 
+//addproduct(admin)
 const addproduct = async (req, res) => {
   try {
     const { name, description, price, category } = req.body;
@@ -29,33 +31,29 @@ const addproduct = async (req, res) => {
       description,
       price,
       category,
-      image: imageUrl, // Save the image URL
+      image: imageUrl,
     });
 
-    // Save the product to the database
     await product.save();
 
-    // Fetch all categories again to re-render the form
+    // Fetch all categories again to re-render the form with a success message
     const categories = await Category.find();
-
-    // Render the addproduct view with a success message and categories
-    res.render('admin/addproduct', { categories, success: 'Product added successfully!', error: null });
+    res.render('admin/addproduct', {
+      categories,
+      successMessage: 'Product added successfully!',
+    });
   } catch (err) {
     console.error('Error adding product:', err);
-
-    // Fetch all categories again to re-render the form
-    const categories = await Category.find();
-
-    // Render the addproduct view with an error message and categories
-    res.render('admin/addproduct', { categories, success: null, error: 'Failed to add product. Please try again.' });
+    res.status(500).send('Internal Server Error');
   }
 };
 
 
+// show productmenu
 const getproduct=async (req,res)=>{
   try{
     const page=parseInt(req.query.page)||1//current page
-    const limit=10;//number of products per page
+    const limit=6;//number of products per page
     const skip=(page-1)*limit//number of products to skip
 
     const products=await Product.find()
@@ -100,7 +98,6 @@ const renderupdatemenu = async (req, res) => {
     // Fetch the product based on its ID
     const product = await Product.findById(req.params.id);
 
-    // Fetch all categories for the dropdown
     const categories = await Category.find();
 
     if (!product) {
@@ -114,6 +111,8 @@ const renderupdatemenu = async (req, res) => {
     res.render('users/404');
   }
 };
+
+
 
 const updatemenu = async (req, res) => {
   try {

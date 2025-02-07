@@ -16,6 +16,7 @@ const renderslider=async(req,res)=>{
   }
 };
 
+
 const addslider=async(req,res)=>{
   try{
     const {title,subtitle}=req.body;
@@ -64,6 +65,7 @@ const updateslider = async (req, res) => {
   }
 };
 
+
 //delete slider
 const deleteslider=async(req,res)=>{
   try{
@@ -71,7 +73,7 @@ const deleteslider=async(req,res)=>{
 
     await Banner.findOneAndDelete(id);
     console.log('slider deleted');
-    res.redirect('/banners');
+    res.redirect('/slidermanagement');
   }catch(error){
     console.log(error);
     res.status(404).send('internal server error');

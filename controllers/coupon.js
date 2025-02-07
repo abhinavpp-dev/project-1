@@ -1,5 +1,6 @@
 const Coupon = require('../models/coupnmodel');
 
+
 // Function to render coupons
 const renderCoupon = async (req, res) => {
   try {
@@ -38,7 +39,7 @@ const applycoupencode = async (req, res) => {
   try {
     const { couponCode, userId, totalAmount } = req.body;
 
-    let discountAmount = 0;
+
     let message = '';
 
     // Check if coupon is valid
@@ -60,8 +61,9 @@ const applycoupencode = async (req, res) => {
     }
 
     // Calculate discount amount
-    discountAmount = (coupon.discount / 100) * totalAmount;
+   const  discountAmount = (coupon.discount / 100) * totalAmount;
     const updatedTotalAmount = totalAmount - discountAmount;
+   
 
     // Update coupon usage
     coupon.usedBy.push(userId);
@@ -70,8 +72,8 @@ const applycoupencode = async (req, res) => {
 
     // Only show success message if coupon is successfully applied
     message = 'Coupon applied successfully!';
-
-    return res.json({ newTotal: updatedTotalAmount.toFixed(2), message });
+    res.json({ newTotal: updatedTotalAmount.toFixed(2), message });
+    
   } catch (error) {
     console.error('Error applying coupon:', error);
     res.status(500).json({ message: 'An error occurred while applying the coupon.', error: error.message });

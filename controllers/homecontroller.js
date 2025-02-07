@@ -43,22 +43,22 @@ const rendercontact=(req,res)=>{
   res.render('users/contact')
 }
 
-
+// const nodemailer = require('nodemailer');
 const contact = async (req, res) => {
   const { name, email, phone, subject, message } = req.body;
-
+console.log(name,email,message,subject)
   try {
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      service: process.env.EMAIL_SERVICE,
       auth: {
-        user: process.env.EMAIL_USER,  // Your email address
-        pass: process.env.EMAIL_PASS   // Your app-specific password
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
       }
     });
 
     const mailOption = {
-      from: `"${name}" <${email}>`,  // User's name and email
-      to: process.env.EMAIL_USER,     // Admin email
+      from: `"${name}" <${email}>`,
+      to: process.env.EMAIL_USER,
       subject: `New Contact Form Submission - ${subject}`,
       text: `
         You have a new contact form submission:
@@ -74,16 +74,17 @@ const contact = async (req, res) => {
     };
 
     await transporter.sendMail(mailOption);
-    console.log("Email sent successfully");
-    res.redirect('/contact?status=success');
+    console.log("Email sent successfully to admin");
+    res.render('users/contact', { error: null });  // Pass error as null
   } catch (error) {
     console.error("Error sending email:", error.message);
-    if (error.response) {
-      console.error("Error response:", error.response);
-    }
-    res.status(500).json({ message: "Failed to send your message. Please try again later." });
+    res.render('users/contact', { error: 'Failed to send your message. Please try again later.' });
   }
 };
+
+
+// module.exports = { contact };
+
 
 
 

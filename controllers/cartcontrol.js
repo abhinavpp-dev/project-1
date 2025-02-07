@@ -3,62 +3,14 @@ const Cart = require('../models/cartmodel');
 const Product = require('../models/product');
 
 
-// const addcart = async (req, res) => {
-//     // Retrieve the token from cookies
-//     const token = req.cookies.token;
-//     if (!token) {
-//         return res.render('users/loginpage',{success:null,error:'plz login first'})
-//     }
-
-//     try {
-//         // Verify the token
-//         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-//         const userId = decoded.userId; // Extract userId from the token payload
-
-//         // Get productId from the request body
-//         const { productId } = req.body;
-
-//         // Check if the cart exists for the user
-//         let cart = await Cart.findOne({ user: userId });
-//         if (!cart) {
-//             cart = new Cart({ user: userId, items: [] });
-//         }
-
-//         // Check if the product exists
-//         const product = await Product.findById(productId);
-//         if (!product) {
-//             return res.render('users/shop',{ success:null,error: 'Product not found.' });
-//         }
-
-//         // Check if the product is already in the cart
-//         const cartItem = cart.items.find(item => item.product.equals(productId));
-//         if (cartItem) {
-//             cartItem.quantity += 1; // Increment quantity if it exists
-//         } else {
-//             cart.items.push({ product: productId, quantity: 1 }); // Add new product to the cart
-//         } 
-//         cart.updatedAt = new Date(); // Update the timestamp
-//         await cart.save(); // Save the cart
-
-//         // Redirect to the cart page or return a success message
-//         return res.render('users/shop1',{success:null,error:null});
-//     } catch (err) {
-//         // Handle JWT-specific errors
-//         if (err.name === 'JsonWebTokenError' || err.name === 'TokenExpiredError') {
-//             return res.render('users/loginpage',{success:null,error:"token expired"});
-//         }
-//         // Handle server errors
-//         return res.render('users/shop',{success:null,error:'error in item add to cart'});
-//     }
-// };
 
 const addcart = async (req, res) => {
     // Retrieve the token from cookies
     const token = req.cookies.token;
 
     if (!token) {
-        // return res.status(401).json({ message: 'Please log in first.' });
-        res.render('users/404');
+        return res.status(401).json({ message: 'Please log in first.' });
+        // res.render('users/404');
     }
 
     try {

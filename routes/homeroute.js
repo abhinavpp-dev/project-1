@@ -19,7 +19,7 @@ router.post('/contact',contact)
 router.get('/menu',getproduct);
 router.get('/cart',rendercart);
 router.get('/checkout',renderCheckout);
-// router.get('/singleproduct',rendersingleproduct);
+
 router.get('/404',render404);
 
 //authentication and user profile

@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 
 // Schema for individual order items
@@ -30,6 +29,12 @@ const orderSchema = new mongoose.Schema(
     name: {
       type: String,
       trim: true,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      match: [/\S+@\S+\.\S+/, 'Invalid email address'],
     },
     address: {
       type: String,
@@ -37,6 +42,11 @@ const orderSchema = new mongoose.Schema(
       trim: true,
     },
     city: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    postalCode: {
       type: String,
       required: true,
       trim: true,
@@ -51,6 +61,10 @@ const orderSchema = new mongoose.Schema(
       type: String,
       enum: ['COD', 'Credit Card'],
       required: true,
+    },
+    stripePaymentId: {
+      type: String, // Store the Stripe Payment ID for online payments
+      default: null,
     },
     totalAmount: {
       type: Number,
@@ -84,6 +98,20 @@ const orderSchema = new mongoose.Schema(
       type: String,
       enum: ['Paid', 'Unpaid'],
       default: 'Unpaid',
+    },
+    deliveryMethod: {
+      type: String,
+      enum: ['Standard', 'Express'],
+      default: 'Standard',
+    },
+    expectedDeliveryDate: {
+      type: Date,
+      default: null,
+    },
+    specialInstructions: {
+      type: String,
+      trim: true,
+      default: '',
     },
     items: [orderItemSchema],
   },

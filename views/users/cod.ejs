@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <%- include('../partials/header') %>
@@ -7,22 +7,23 @@
 </head>
 <body>
 
-  <!-- COD section -->
+  <!-- COD Section -->
   <div class="cod-section">
     <div class="container">
       <div class="row">
+        
         <!-- User Details -->
         <div class="col-md-7">
           <h4>User Details</h4>
           <div class="user-details">
             <p><strong>Full Name:</strong> <%= order.name %></p>
-            <p><strong>Address:</strong> <%= order.address %></p>
-            <p><strong>City:</strong> <%= order.city %></p>
+            <p><strong>Address:</strong> <%= order.address %>, <%= order.city %></p>
+            <p><strong>Postal Code:</strong> <%= order.postalCode %></p>
             <p><strong>Phone Number:</strong> <%= order.phone %></p>
           </div>
         </div>
 
-        <!-- Product Details -->
+        <!-- Order Summary -->
         <div class="col-md-5">
           <h4>Order Summary</h4>
           <table class="order-table">
@@ -36,12 +37,14 @@
             <tbody>
               <% order.items.forEach(item => { %>
                 <tr>
-                  <td><%= item.product.name %></td>
+                  <td><%= item.product ? item.product.name : 'Product Not Found' %></td>
                   <td><%= item.quantity %></td>
-                  <td>₹<%= (item.product.price * item.quantity).toFixed(2) %></td>
+                  <td>₹<%= item.product ? (item.product.price * item.quantity).toFixed(2) : 'N/A' %></td>
                 </tr>
               <% }) %>
             </tbody>
+            
+            
             <tfoot>
               <!-- Subtotal Before Discount -->
               <tr>
@@ -49,12 +52,12 @@
                 <th>₹<%= (order.totalAmount + (order.discountAmount || 0)).toFixed(2) %></th>
               </tr>
 
-              <!-- Discount Row (only if discount exists) -->
+              <!-- Discount Row (only if a discount exists) -->
               <% if (order.discountAmount && order.discountAmount > 0) { %>
-              <tr>
-                <th colspan="2">Discount Applied</th>
-                <th>- ₹<%= order.discountAmount.toFixed(2) %></th>
-              </tr>
+                <tr>
+                  <th colspan="2">Discount Applied</th>
+                  <th>- ₹<%= order.discountAmount.toFixed(2) %></th>
+                </tr>
               <% } %>
 
               <!-- Final Total After Discount -->
@@ -67,6 +70,7 @@
         </div>
       </div>
 
+      <!-- Thank You Message -->
       <div class="row mt-4">
         <div class="col-12 text-center">
           <p>Thank you for choosing Cash on Delivery. Your order will be delivered to the specified address.</p>
@@ -75,7 +79,7 @@
       </div>
     </div>
   </div>
-  <!-- end COD section -->
+  <!-- End COD Section -->
 
   <%- include('../partials/script') %>
 </body>

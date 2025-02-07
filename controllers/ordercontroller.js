@@ -3,9 +3,9 @@ const jwt=require('jsonwebtoken');
 
 const renderAllOrders = async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1; // Current page number from query params, default to 1
-    const limit = 10; // Number of orders to display per page
-    const skip = (page - 1) * limit; // Calculate how many records to skip
+    const page = parseInt(req.query.page) || 1; 
+    const limit = 5; 
+    const skip = (page - 1) * limit; 
 
     // Fetch orders with pagination
     const orders = await Order.find({})
@@ -56,26 +56,8 @@ const  deleteorder=async(req,res)=>{
   }
 };
 
-updateorder=async(req,res)=>{
-  const {id}=req.params;
-  const{status}=req.body;
-  try{
-    const updatedorder=await Order.findByIdAndUpdate(
-      id,
-      {status},
-      {new:true}
-    );
-    if(!updatedorder){
-      return res.status(404).json({message:'error in update'});
-    }
-    res.redirect('/orders')
-  }catch(error){
-    console.error(error);
-    res.status(404).send('internal  server error');
-  }
 
-}
-updateorder = async (req, res) => {
+ const updateorder = async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
 
@@ -124,7 +106,6 @@ const userorder = async (req, res) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const userId = decoded.userId; // Extract userId from the token payload
 
-console.log(userId);
     
 
     const orders = await Order.find({ user: userId })
@@ -140,7 +121,8 @@ console.log(userId);
     res.render('users/userorder', { orders });
   } catch (error) {
     console.error("Error fetching orders:", error);
-    res.status(500).send('Server Error');
+    // res.status(500).send('Server Error');
+    res.render('users/404')
   }
 };
 
@@ -155,8 +137,6 @@ const deliveredOrders = async (req, res) => {
     // Verify the token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const userId = decoded.userId; // Extract userId from the token payload
-
-console.log(userId);
     
 
     const orders = await Order.find({ user: userId })
@@ -172,7 +152,8 @@ console.log(userId);
     res.render('users/deliveredorder', { orders });
   } catch (error) {
     console.error("Error fetching orders:", error);
-    res.status(500).send('Server Error');
+    // res.status(500).send('Server Error');
+    res.render('users/404')
   }
 };
 

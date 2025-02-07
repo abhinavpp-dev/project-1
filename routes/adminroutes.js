@@ -10,11 +10,6 @@ const { renderCoupon, createCoupon, deleteCoupon } = require('../controllers/cou
 const { renderorder, renderAllOrders, deleteorder, updateorder } = require('../controllers/ordercontroller');
 
 
-
-
-
-//multer setup
-
 //admin login
 router.get('/adminlogin',renderadminlogin);
 router.post('/adminlogin',adminlogin)
@@ -48,7 +43,7 @@ router.post('/categories/:id',deletecategory);
 //logout
 router.get('/adminlogout',adminlogout)
 
-// router.get('/admindash',re)
+
 
 //block and unblock user
 

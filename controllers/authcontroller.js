@@ -49,51 +49,56 @@ const renderloginpage=(req,res)=>{``
 
 
 
-// signup
-const signup=async(req,res)=>{
-  try{
-  const{fullName,email,mobile,password}=req.body;
+const signup = async (req, res) => {
+  try {
+    const { fullName, email, mobile, password } = req.body;
 
-  // check if  user alaready exists
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.render('users/loginpage', { success: null, error: 'User already exists' });
+    }
 
-  const existinguser=await User.findOne({email});
-  if(existinguser){
-   return res.render('users/loginpage',{success:'user already exits',error:null});
+    // Hash password and create new user
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = new User({ fullName, email, mobile, password: hashedPassword });
+
+    try {
+      await user.save();  // This might throw validation errors
+    } catch (validationError) {
+      // Check if it's a validation error for the mobile number
+      if (validationError.errors && validationError.errors.mobile) {
+        return res.render('users/loginpage', { success: null, error: validationError.errors.mobile.message });
+      }
+      throw validationError; // Re-throw if it's not a mobile number validation issue
+    }
+
+    // Generate OTP and save it to the user
+    const otp = crypto.randomInt(100000, 1000000);
+    user.otp = otp;
+    user.otpExpiry = Date.now() + 10 * 60 * 1000; // Expires in 10 minutes
+    await user.save();
+
+    // Send OTP via email
+    const mailOption = {
+      to: email,
+      from: process.env.MAIL_USER,
+      subject: 'OTP VERIFICATION',
+      text: `Your OTP code is ${otp}`,
+    };
+
+    transporter.sendMail(mailOption, (error) => {
+      if (error) {
+        console.error('OTP email error', error);
+        return res.render('users/404');
+      }
+      return res.render('users/otp', { userId: user._id, success: null, error: null });
+    });
+  } catch (err) {
+    console.error('Signup error:', err);
+    res.render('users/404');
   }
-
-  //hashpassword and create new user
-
-   const hashedpassword=await bcrypt.hash(password,10);
-  const user=new User({fullName,email,mobile,password:hashedpassword});
-  await user.save();
-
-  // generate otp and save it to the user
-
-  const otp=crypto.randomInt(100000,1000000);
-  user.otp=otp;
-  user.otpExpiry=Date.now()+10 * 60 * 1000 //expire in 10minutes
-  await user.save();
-
-  const mailOption={
-    to:email,
-    from:process.env.MAIL_USER,
-    subject:'OTP VERIFICATION',
-    text:`your otp code is ${otp}`,
-  };
-  transporter.sendMail(mailOption,(error)=>{
-    if(error){
-      // return res.status(500).json({message:'error in otp email'});
-      res.render('users/404');
-  }
-  return res.render('users/otp',{userId:user._id,success:null,error:null});
-  });
-}catch(err){
-  console.error('signup error',err);
-  // res.status(500).json({message:'internal server error'});
-  res.render('users/404');
-}
-  };
-
+};
 
   //verify otp
   const verifyotp=async(req,res)=>{
