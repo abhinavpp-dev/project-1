@@ -70,6 +70,9 @@ const renderCheckout = async (req, res) => {
     });
 
   } catch (error) {
+    if (error.name === 'JsonWebTokenError' || error.name === 'TokenExpiredError') {
+      return res. redirect('/login')
+  }
     console.error('Error in renderCheckout:', error);
     res.status(500).send('Server error');
   }
@@ -177,6 +180,9 @@ const checkoutController = async (req, res) => {
       return res.status(400).send('Invalid payment method.');
     }
   } catch (error) {
+    if (error.name === 'JsonWebTokenError' || error.name === 'TokenExpiredError') {
+      return res. redirect('/login')
+  }
     console.error('Error in checkoutController:', error);
     return res.status(500).send('Internal server error.');
   }
