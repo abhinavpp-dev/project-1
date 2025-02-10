@@ -1,20 +1,16 @@
-const multer=require('multer');
-const {CloudinaryStorage}=require('multer-storage-cloudinary')
+const multer = require('multer');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const cloudinary = require('./cloudinary'); // Cloudinary setup
+const { folder, allowedFormats } = require('../config/params');
 
-const cloudinary=require('./cloudinary');//import cloudinary setup
-const { param } = require('../routes/adminroutes');
-
-//configure multerv to use cloudinary
-
-const storage=new CloudinaryStorage({
-  cloudinary:cloudinary,
-  params:{
-    folder:'menu',
-    allowed_formats:['jpg','jpeg','png','webp'],
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: folder,
+    allowed_formats: allowedFormats
   }
 });
-const upload=multer({storage});
 
-module.exports=upload;
+const upload = multer({ storage });
 
-
+module.exports = upload;
