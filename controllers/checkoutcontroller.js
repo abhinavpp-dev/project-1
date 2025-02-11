@@ -139,6 +139,7 @@ const checkoutController = async (req, res) => {
         status: 'Order Placed',
       });
 
+
       await order.save();
       await Cart.findOneAndUpdate({ user: userId }, { $set: { items: [] } });
 
@@ -164,8 +165,11 @@ const checkoutController = async (req, res) => {
           };
         }),
         mode: 'payment',
-        success_url: `http://localhost:4000/complete?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `http://localhost:4000/cancel`,
+        // success_url: `http://localhost:4000/complete?session_id={CHECKOUT_SESSION_ID}`,
+        success_url: `http://43.205.182.80:3001//complete?session_id={CHECKOUT_SESSION_ID}`,
+
+        // cancel_url: `http://localhost:4000/cancel`,
+        cancel_url: `http://43.205.182.80:3001//cancel`,
         billing_address_collection: 'required',
         phone_number_collection: { enabled: true },
         metadata: {
