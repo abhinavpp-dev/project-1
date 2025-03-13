@@ -1,5 +1,20 @@
 const mongoose = require('mongoose');
 
+
+const addressSchema = new mongoose.Schema({
+  fullName: { type: String, required: true }, // Full name for delivery
+  mobile: { type: String, required: true },   // Contact number
+  label: { type: String, required: true },    // e.g., Home, Work
+  street: { type: String, required: true },
+  landmark: { type: String },                 // Optional landmark
+  city: { type: String, required: true },
+  state: { type: String, required: true },
+  zipCode: { type: String, required: true },
+  country: { type: String, required: true },
+  deliveryInstructions: { type: String },     // Special instructions
+  isDefault: { type: Boolean, default: false } // To manage default address
+});
+
 const userschema = new mongoose.Schema({
   fullName: { 
     type: String, 
@@ -44,7 +59,8 @@ const userschema = new mongoose.Schema({
   isBlocked: { 
     type: Boolean, 
     default: false 
-  }
+  },
+  addresses: [addressSchema]
 });
 
 module.exports = mongoose.model('User', userschema);

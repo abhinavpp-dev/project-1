@@ -2,13 +2,14 @@ const express=require('express')
 const router=express.Router();
 
 const { renderabout, rendercontact,rendercart,render404, contact, }=require('../controllers/homecontroller');
-const {renderloginpage, signup, verifyotp, login,renderforgotpassword, forgotpassword, forgotpasswordotp, resetpassword, renderuserdashbord, renderuserprofile, updateprofile, logout, renderhomepage, loginout}=require('../controllers/authcontroller');
+const {renderloginpage, signup, verifyotp, login,renderforgotpassword, forgotpassword, forgotpasswordotp, resetpassword, renderuserdashbord, logout, renderhomepage, loginout}=require('../controllers/authcontroller');
 const { getproduct } = require('../controllers/addproduct');
 const cartController=require('../controllers/cartcontrol');
 const { renderCheckout, checkoutController } = require('../controllers/checkoutcontroller');
 const { paymentsucess, cancelpayment } = require('../controllers/payment');
 const { userorder, deliveredOrders } = require('../controllers/ordercontroller');
 const { applycoupencode } = require('../controllers/coupon');
+const { renderprofile, updateProfile, addAdress,  deleteAdress, } = require('../controllers/profile');
 
 
 
@@ -32,8 +33,10 @@ router.post('/forgotpassword',forgotpassword);
 router.post('/forgotpassword-otp',forgotpasswordotp);
 router.post('/resetpassword',resetpassword)
 router.get('/user-dashbord',renderuserdashbord);
-router.get('/profile',renderuserprofile)                                                                                                                                                                                                                                                                                                                                                                                                                       
-router.post('/update-profile',updateprofile)
+router.get('/profile',renderprofile)                                                                                                                                                                                                                                                                                                                                                                                                                       
+router.post('/update-profile',updateProfile)
+router.post('/add-address',addAdress)
+router.post('/delete-address',deleteAdress)
 router.post('/logout',logout)
 
 

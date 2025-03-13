@@ -370,42 +370,38 @@ const forgotpassword=async(req,res)=>{
           }
         };
 
-        //render profile
-
-      const renderuserprofile=async(req,res)=>{
-        try{
-          const token=req.cookies.token;//extract token from cookies
-          if(!token){
-            return res.redirect('/login')
-
-          }
-
-          //verify and decoded the token
-          const decoded=jwt.verify(token,process.env.JWT_SECRET);
-          const userId=decoded.userId;
-          console.log(userId);
-
-          const user=await User.findById(userId);
-          if(!user){
-            // res.status(400).send('user not found');
+       
+      const renderuserprofile = async (req, res) => {
+        try {
+            const token = req.cookies.token; // Extract token from cookies
+            if (!token) {
+                return res.redirect('/login');
+            }
+    
+            // Verify and decode the token
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            const userId = decoded.userId;
+    
+            const user = await User.findById(userId);
+            if (!user) {
+                return res.render('users/404');
+            }
+    
+            res.render('users/profile', { user }); // Profile page with user data
+        } catch (err) {
+            if (err.name === 'JsonWebTokenError' || err.name === 'TokenExpiredError') {
+                return res.redirect('/login');
+            }
+            console.error('Error in render profile:', err);
             res.render('users/404');
-          }
-          
-          res.render('users/profile',{user});
-        }catch(err){
-          if (err.name === 'JsonWebTokenError' || err.name === 'TokenExpiredError') {
-            return res. redirect('/login')
         }
-          console.log('error in render profile:',err);
-          // res.status(500).send('server error');
-          res.render('users/404');
-        }
-      };
-        
+    };
+    
 
        //update user details
 
        const updateprofile=async (req,res)=>{
+
         try{
           const token=req.cookies.token;
           if(!token){
@@ -415,13 +411,22 @@ const forgotpassword=async(req,res)=>{
       }
       const decoded=jwt.verify(token,process.env.JWT_SECRET);
       const userId=decoded.userId;
+
       const {fullName,email,mobile}=req.body;
 
-      //updated users details
-      const user=await User.findByIdAndUpdate(userId,{fullName,email,mobile},{new:true}
+      if(!fullName ||!email ||!mobile){
+        return  res.render('users/profile',{user:await User.findById(userId)||{addresses:[]}})
+      }
+      const user= await User.findById(userId);
+      if(!user){
+        return res.render('users/404');
+      }
 
-      );
-      res.render('users/profile', { user, message: 'Profile updated successfully'})
+      //updated users details
+
+      const updatedUser=await User.findByIdAndUpdate(userId,{fullName,email,mobile},{new:true,runValidators:true})
+      user.addresses = user.addresses || [];
+      res.render('users/profile', { user:updatedUser, message: 'Profile updated successfully'})
           
        }catch(error){
         console.log(error)

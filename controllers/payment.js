@@ -2,6 +2,8 @@ const Order = require('../models/order');
 const jwt = require('jsonwebtoken');
 const stripe = require('stripe')(process.env.STRIPE_SECRETKEY);
 const Cart = require('../models/cartmodel');
+
+ 
 const paymentsucess = async (req, res) => {
   try {
     const token = req.cookies.token;
@@ -61,6 +63,7 @@ const paymentsucess = async (req, res) => {
     res.status(500).send('Internal server error');
   }
 };
+
 
 const cancelpayment = async (req, res) => {
   try {
