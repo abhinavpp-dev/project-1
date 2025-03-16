@@ -4,35 +4,20 @@
     <title>Profile & Addresses</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/profile.css">
-    <style>
-        .container {
-            display: flex;
-            gap: 20px;
-        }
-        .profile-section {
-            flex: 1;
-        }
-        .address-section {
-            flex: 2;
-        }
-        .address-container {
-            margin-top: 20px;
-        }
-        .added-address-container {
-            margin-top: 30px;
-            border-top: 2px solid #ccc;
-            padding-top: 15px;
-        }
-        .address-card {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/navbar.css">
 </head>
 <body>
+    <nav class="navbar">
+       
+        <div class="nav-links" id="navLinks">
+            <a href="/">Home</a>
+            <a href="/profile">Profile</a>
+
+            <a href="/userorder">Orders</a>
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+    </nav>
+
     <div class="container">
         <div class="profile-section">
             <h1>Profile Details</h1>
@@ -57,9 +42,8 @@
                             <h3><%= address.label %></h3>
                             <p><%= address.street %>, <%= address.city %>, <%= address.state %>, <%= address.zipCode %>, <%= address.country %></p>
                             <div class="action-links">
-                                <a href="/edit-address/<%= address._id %>">Edit</a> | 
-                                <form action="/delete-address" method="POST" style="display: inline;">
-                                    <input type="hidden" name="addressId" value="<%= address._id %>">
+                                <form action="/delete-address/<%= user._id %>" method="POST" style="display: inline;">
+                                    <input type="hidden" name="addressId" value="<%= address._id.toString() %>">
                                     <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
                                 </form>
                             </div>
@@ -114,5 +98,12 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+    </script>
 </body>
 </html>

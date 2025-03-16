@@ -9,7 +9,7 @@ const { renderCheckout, checkoutController } = require('../controllers/checkoutc
 const { paymentsucess, cancelpayment } = require('../controllers/payment');
 const { userorder, deliveredOrders } = require('../controllers/ordercontroller');
 const { applycoupencode } = require('../controllers/coupon');
-const { renderprofile, updateProfile, addAdress,  deleteAdress, } = require('../controllers/profile');
+const { renderprofile, updateProfile, addAdress, deleteAddress,   } = require('../controllers/profile');
 
 
 
@@ -36,7 +36,10 @@ router.get('/user-dashbord',renderuserdashbord);
 router.get('/profile',renderprofile)                                                                                                                                                                                                                                                                                                                                                                                                                       
 router.post('/update-profile',updateProfile)
 router.post('/add-address',addAdress)
-router.post('/delete-address',deleteAdress)
+// router.post('/delete-address',deleteAddress)
+router.post('/delete-address/:userId', deleteAddress);
+
+
 router.post('/logout',logout)
 
 
